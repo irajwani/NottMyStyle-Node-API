@@ -4,10 +4,12 @@
   "description": "Authentication endpoint for react native app called \"NottMyStyle\"",
   "main": "app.js",
   "engines": {
-    "node": "12.13.0"
+    "node": "12.13.0",
+    "npm": "6.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "heroku local web"
   },
   "author": "Imad Rajwani",
   "license": "ISC",
