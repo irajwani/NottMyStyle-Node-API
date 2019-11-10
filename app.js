@@ -192,7 +192,7 @@ transporter.use('compile', hbs({
 }));
 
 //Email Templates
-app.post('/sendWelcomeEmail', (req, res) => {
+app.get('/sendWelcomeEmail', (req, res) => {
   
   let uid = "LJ5iio1mhoQRoN0cZfGLPwrYp2B3"
   admin.auth().getUser(uid)
