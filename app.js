@@ -194,6 +194,8 @@ transporter.use('compile', hbs({
   extName: '.handlebars',
 }));
 
+
+let tempEmail = 'uzi.bro911@gmail.com'
 //Email Templates
 app.post('/sendWelcomeEmail', (req, res) => {
   
@@ -206,7 +208,7 @@ app.post('/sendWelcomeEmail', (req, res) => {
       // console.log(sendTo, name);
       let mailOptions = {
           from: 'nottmystyleapp@gmail.com',
-          to: sendTo, 
+          to: tempEmail, 
           subject: `${name}, Welcome to NottMyStyle`,
           text: '',
           template: 'layouts/welcome',
@@ -281,19 +283,28 @@ app.post('/sendWelcomeEmail', (req, res) => {
 })
 
 app.post('/sendProductUploadConfirmationEmail', (req,res) => {
-  let {uid, uri, name, price} = req.query.data;
+  // let {uid, uri, name, price} = req.query.data;
+  let uid = "LJ5iio1mhoQRoN0cZfGLPwrYp2B3", name = "test product", price = 4, 
+  uri = "https://firebasestorage.googleapis.com/v0/b/nottmystyle-447aa.appspot.com/o/Users%2FC0IYwul2U8VPumDVYFvag3CfZvt2%2F-LkkN8iYUE9pfhaT99PC%2F0?alt=media&token=96d5f636-eb35-4abc-ac37-2ab13aeed296";
   admin.auth().getUser(uid)
   .then(userRecord => {
       let sendTo = userRecord.email;
       
       let mailOptions = {
           from: 'nottmystyleapp@gmail.com',
-          to: sendTo, 
+          to: tempEmail, 
           subject: `Item uploaded - ${name}`,
           text: '',
           template: 'layouts/listingLive',
+          // attachments: [{
+          //   filename: 'product',
+          //   path: uri,
+          //   cid: 'product'
+          // }],
           context: {
-              name: 'Accime Esterling'
+              name,
+              price,
+              uri
           } 
       };
       
@@ -318,6 +329,96 @@ app.post('/sendProductUploadConfirmationEmail', (req,res) => {
       return null
   })
   .catch((e)=>console.log('failed to send because ' + e))
+})
+
+app.post('/sendPurchaseEmail', (req,res) => {
+  // let {uid, uri, name, price, address} = req.query.data;
+  let uid = "LJ5iio1mhoQRoN0cZfGLPwrYp2B3", name = "test product", price = 4,
+  email = "imadrajwani@gmail.com", 
+  uri = "https://firebasestorage.googleapis.com/v0/b/nottmystyle-447aa.appspot.com/o/Users%2FC0IYwul2U8VPumDVYFvag3CfZvt2%2F-LkkN8iYUE9pfhaT99PC%2F0?alt=media&token=96d5f636-eb35-4abc-ac37-2ab13aeed296",
+  address = {addressOne: "test", addressTwo: "testy", city: 'ktown', postCode: "75500"};
+  
+  let mailOptions = {
+      from: 'nottmystyleapp@gmail.com',
+      to: tempEmail, 
+      subject: `Purchase receipt - ${name}`,
+      text: '',
+      template: 'layouts/purchase',
+      context: {
+          name,
+          price,
+          uri,
+          address,
+      } 
+  };
+  
+  // Step 4
+  
+      
+  transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+          console.log(err);
+          console.log('Error occurs');
+      }
+      else {
+          console.log(data);
+          console.log('Email sent!!!');
+      }
+  
+  })
+          
+      
+
+      
+      return null
+  
+  
+})
+
+app.post('/sendSaleEmail', (req,res) => {
+  // let {uid, uri, name, price, address, buyerName} = req.query.data;
+  let uid = "LJ5iio1mhoQRoN0cZfGLPwrYp2B3", name = "test product", price = 4,
+  email = "imadrajwani@gmail.com", 
+  uri = "https://firebasestorage.googleapis.com/v0/b/nottmystyle-447aa.appspot.com/o/Users%2FC0IYwul2U8VPumDVYFvag3CfZvt2%2F-LkkN8iYUE9pfhaT99PC%2F0?alt=media&token=96d5f636-eb35-4abc-ac37-2ab13aeed296",
+  address = {addressOne: "test", addressTwo: "testy", city: 'ktown', postCode: "75500"},
+  buyerName = "Uzair Lalani"
+  
+  let mailOptions = {
+      from: 'nottmystyleapp@gmail.com',
+      to: tempEmail, 
+      subject: `Item Sold - ${name}`,
+      text: '',
+      template: 'layouts/sale',
+      context: {
+          name,
+          price,
+          uri,
+          address,
+          buyerName,
+      } 
+  };
+  
+  // Step 4
+  
+      
+  transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+          console.log(err);
+          console.log('Error occurs');
+      }
+      else {
+          console.log(data);
+          console.log('Email sent!!!');
+      }
+  
+  })
+          
+      
+
+      
+      return null
+  
+  
 })
 
 app.get('/', (req, res) => {
