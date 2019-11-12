@@ -10,13 +10,16 @@ const hbs = require('nodemailer-express-handlebars');
 
 const app = express();
 
-const app_domain = "https://calm-coast-12842.herokuapp.com";
+const app_domain = "https://glacial-island-26545.herokuapp.com";
+// const app_domain = "https://calm-coast-12842.herokuapp.com";
 // const app_domain = "https://localhost:5000";
 
 app.engine("ejs", engines.ejs);
+// app.engine("hbs", engines.handlebars);
 app.set("views", "./views");
 app.set("view engine", "ejs");
 app.use('/public', express.static('public'));
+app.use('/img', express.static(__dirname + '/Images'));
 const {credentials, firebaseAdminConfig, CHATKIT_INSTANCE_LOCATOR, CHATKIT_SECRET_KEY, gmailConfig} = require('./keys');
 admin.initializeApp(firebaseAdminConfig);
 
@@ -195,6 +198,7 @@ transporter.use('compile', hbs({
 app.post('/sendWelcomeEmail', (req, res) => {
   
   let uid = "LJ5iio1mhoQRoN0cZfGLPwrYp2B3"
+  // let {uid,name} = req.query.data;
   admin.auth().getUser(uid)
   .then(userRecord => {
       let sendTo = userRecord.email;
@@ -204,10 +208,16 @@ app.post('/sendWelcomeEmail', (req, res) => {
           from: 'nottmystyleapp@gmail.com',
           to: sendTo, 
           subject: `${name}, Welcome to NottMyStyle`,
-          text: 'Wooohooo it works!!',
+          text: '',
           template: 'layouts/welcome',
+          attachments: [{
+            filename: 'logo.png',
+            path: './Images/logo.png',
+            cid: 'logo'
+          }],
           context: {
-              name: 'Accime Esterling'
+              name: 'Accime Esterling',
+              logo: 'img/logo.png'
           } // send extra values to template
       };
       
@@ -268,6 +278,46 @@ app.post('/sendWelcomeEmail', (req, res) => {
   //   })
   //   .catch((e)=>console.log('failed to send because ' + e))
 
+})
+
+app.post('/sendProductUploadConfirmationEmail', (req,res) => {
+  let {uid, uri, name, price} = req.query.data;
+  admin.auth().getUser(uid)
+  .then(userRecord => {
+      let sendTo = userRecord.email;
+      
+      let mailOptions = {
+          from: 'nottmystyleapp@gmail.com',
+          to: sendTo, 
+          subject: `Item uploaded - ${name}`,
+          text: '',
+          template: 'layouts/listingLive',
+          context: {
+              name: 'Accime Esterling'
+          } 
+      };
+      
+      // Step 4
+      
+          
+      transporter.sendMail(mailOptions, (err, data) => {
+          if (err) {
+              console.log(err);
+              console.log('Error occurs');
+          }
+          else {
+              console.log(data);
+              console.log('Email sent!!!');
+          }
+      
+      })
+          
+      
+
+      
+      return null
+  })
+  .catch((e)=>console.log('failed to send because ' + e))
 })
 
 app.get('/', (req, res) => {
@@ -736,29 +786,29 @@ app.get('/deleteUsers', (req, res) => {
 // })  
 
 
-// app.get('/test', (req,res) => {
-//   admin.database().ref().once("value", (dataFromReference) => { 
-//     var Users = (dataFromReference.val()).Users;
-//     var uid, data, updates;
-//     Object.entries(Users).forEach(user => {
-//       uid = user[0];
-//       updates = {}
-//       updates[`/Users/${uid}/appUsage/`] = 0;
-//       admin.database().ref().update(updates);
-//     })
-//     // var newUsers = Users.map((user) => {
-//     //   user['appUsage'] = 0;
-//     //   return user;
-//     // })
-//     // products = products.forEach( (product) => product['dateSold'] = '')
-//     // console.log(newProducts)
-//     // console.log(products[2].dateSold)
-//     // var updates = {}
-//     // updates['/Users/'] = newUsers
-//     // console.log(newUsers);
-//     // admin.database().ref().update(updates);
-//   })
-// })
+app.get('/test', (req,res) => {
+  admin.database().ref().once("value", (dataFromReference) => { 
+    var Users = (dataFromReference.val()).Users;
+    var uid, data, updates;
+    Object.entries(Users).forEach(user => {
+      uid = user[0];
+      updates = {}
+      updates[`/Users/${uid}/appUsage/`] = 0;
+      admin.database().ref().update(updates);
+    })
+    // var newUsers = Users.map((user) => {
+    //   user['appUsage'] = 0;
+    //   return user;
+    // })
+    // products = products.forEach( (product) => product['dateSold'] = '')
+    // console.log(newProducts)
+    // console.log(products[2].dateSold)
+    // var updates = {}
+    // updates['/Users/'] = newUsers
+    // console.log(newUsers);
+    // admin.database().ref().update(updates);
+  })
+})
 
 //Wanted to add trivial value to each product from within each individual user object.
 // app.get('/attachViews', (req, res) => {

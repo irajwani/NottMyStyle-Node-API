@@ -50,9 +50,9 @@ const gmailConfig = {
   // accessToken: "ya29.Il-iB3IE65Xgn34G_PW9F6QrLbTnDCBzAvpxAumZOhn9rIAp8Ej7Uk8S9nkkFKUShLRRpWwdhsEyrRbMjXT-VxMd9oKBju3mHmq32tFdbLLg5d3Nbg4u5Eq50LxUk6g7kg",
   clientId: '496969588552-13ufofcpm5s2vgajjbt0ba32gegjuqi3.apps.googleusercontent.com',
   clientSecret: '62Vc6zuG5Oz3ISJQ3KHQv7xo',
-  refreshToken: '1//04qUhPhGQ7M8dCgYIARAAGAQSNwF-L9IruDJhIRkuIUax4rOkYdslyThRA_o2Y7pQ5BZBSzQe64SHEN5X1RjG7NkEL3hNDS81Z7w',
-  accessToken: 'ya29.Il-wBwAzd448ZWnS9wucf7Lw2aZytM3GY6f5bEdVLc5vQk2zISnyIujAqDVL4tFF42Yp8UCvJUWz5l6K-A_gFK7upMYWHOOynE9D8KRVtYa9N-kh695tovhqaKEPb2Z9wA',
-  accessUrl: 'https://developers.google.com/oauthplayground/#step2&apisSelect=https%3A%2F%2Fmail.google.com%2F&auth_code=4%2FtAHjuEmaN-ra2nVi1piS_wgBJ_c9jJyZdObRa49OsG3q5AfXzHZzLOIrDAAZGw972bctj2DAzb_zH8fZ3MQbcoE&refresh_token=1%2F%2F048S0FAoPOf85CgYIARAAGAQSNwF-L9IrXx8TAJKrh2oxEhauFUPW5hGvVSyo2Uy3ECLkWjcPsu91-sZRE9EgohnknJICSQAmqfs&access_token_field=ya29.Il-wByy5UoOIeLYsoo26TVrZEo0JishSHSFE_Y6a0wzENnpdjFBgWE_BAtpEDKP4j9WKGGkVpQ9KUc0u5zh7-NOQPAeNJtf2NVfihovjNHh-NN_lgqnC2GIcFfsN3Q2J7g&url=https%3A%2F%2F&content_type=application%2Fjson&http_method=GET&useDefaultOauthCred=unchecked&oauthEndpointSelect=Google&oauthAuthEndpointValue=https%3A%2F%2Faccounts.google.com%2Fo%2Foauth2%2Fv2%2Fauth&oauthTokenEndpointValue=https%3A%2F%2Fwww.googleapis.com%2Foauth2%2Fv4%2Ftoken&expires_in=3599&access_token_issue_date=1573211273&for_access_token=ya29.Il-wByy5UoOIeLYsoo26TVrZEo0JishSHSFE_Y6a0wzENnpdjFBgWE_BAtpEDKP4j9WKGGkVpQ9KUc0u5zh7-NOQPAeNJtf2NVfihovjNHh-NN_lgqnC2GIcFfsN3Q2J7g&includeCredentials=checked&accessTokenType=bearer&autoRefreshToken=unchecked&accessType=offline&prompt=consent&response_type=code&wrapLines=on',
+  refreshToken: '1//04MMa2PMDkfHzCgYIARAAGAQSNwF-L9IrF7WgpqgU1wWDwdSQqiebq_E4GSpclDRR_uOsm-JzKS2gOf0Tu92KTGsD6G1aZ8qUEq4',
+  accessToken: 'ya29.Il-wB2BvFntR9z5CFw4lAy1bU1z-eWTMYOJDGjIL2dUi7I87d6J7bfs5bW3nLlHeWW-Iotx3IwKApCRdUJtFJdLODAVA0UvfL3Xie18jq6eVXbsK6velPw5QDfjrDZ87Fw',
+  accessUrl: 'https://developers.google.com/oauthplayground/',
   
 
 }
