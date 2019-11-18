@@ -44,23 +44,30 @@ const credentials = {
 const gmailConfig = {
   type: 'oauth2',
   user: 'nottmystyleapp@gmail.com',
-  // clientId: '408839158253-hlu7k67d3lju78n1b8563t9rs4u4j1s9.apps.googleusercontent.com',
-  // clientSecret: 'jdomtOpKaKe_UBbqrK5Kwf9r',
-  // refreshToken: '1//041nLgXalYH-jCgYIARAAGAQSNwF-L9Ir54kMyGKrXRuQPqAYqjSdoNF2fyPXn8B_EPSkfZoevX9zYe0Q_O0hsGzI5LjKF04kUnw',
-  // accessToken: "ya29.Il-iB3IE65Xgn34G_PW9F6QrLbTnDCBzAvpxAumZOhn9rIAp8Ej7Uk8S9nkkFKUShLRRpWwdhsEyrRbMjXT-VxMd9oKBju3mHmq32tFdbLLg5d3Nbg4u5Eq50LxUk6g7kg",
   clientId: '496969588552-13ufofcpm5s2vgajjbt0ba32gegjuqi3.apps.googleusercontent.com',
   clientSecret: '62Vc6zuG5Oz3ISJQ3KHQv7xo',
-  refreshToken: '1//04s4QRmKs2mx1CgYIARAAGAQSNwF-L9IrWRjqbIsrkAZ-u_KExXHcU_GHJH69kbhJbKtUPFtllyvIBubyeqXlPVaUDy6wtop-SWs',
-  accessToken: 'ya29.Il-wB8gnC1oY04a8sG4urfEJj5RvPQezU7BwiZzFOrbccPa9kd5hkeutWiH902crKMvV-_opnlYm8lFLpms1zCpgY7xd5EZXDwBXq-mIPppHZuFglzFxBMAvxx74wRiQ7A',
-  accessUrl: 'https://developers.google.com/oauthplayground/',
+  // refreshToken: '1//04fen6SiswYSCCgYIARAAGAQSNwF-L9IrIMiFXRRF2s6xlgksRhczNbMK9f_WsYm-zhPR0cobAo02uKKynHCwcPDWcz-qU3_s6hg',
+  // accessToken: 'ya29.Il-wByMm65DFRtyPRyDr4zAsRFjady5y5WOU6jkd3LNDnB9R3__dj9F2uFJDIS8CFTaZ6KwF9vM33WetNw8S_chWcOoWPmRCxALK_DKCYvf_XVWfyfrhsW2zKjvey4-Dwg',
+  // accessUrl: 'https://developers.google.com/oauthplayground/',
   
 
 }
 
-module.exports.credentials = credentials;
+// const GoogleAuthorizationCode = "4/tQERrEwhaF9VcQlZTuv6Onl4jJCTdOy8Wf_feui9RQI0w4YPGNHiWFMmQWkoGmX0-CpxyfiMPvwZeDtAYUIBuUE";
+// 4%2FtQFAACSHFLQWCrf7Ihhy8WMRorZQJPiIHrdm9vvTszokSaHTzWEKfBeGZLXr7JfVjmGflV3iI0-O31RVfqhqcj0
+// module.exports.credentials = credentials;
 
-module.exports.firebaseAdminConfig = firebaseAdminConfig
-module.exports.CHATKIT_SECRET_KEY = CHATKIT_SECRET_KEY
-module.exports.CHATKIT_INSTANCE_LOCATOR = CHATKIT_INSTANCE_LOCATOR
+// module.exports.firebaseAdminConfig = firebaseAdminConfig
+// module.exports.CHATKIT_SECRET_KEY = CHATKIT_SECRET_KEY
+// module.exports.CHATKIT_INSTANCE_LOCATOR = CHATKIT_INSTANCE_LOCATOR
 
-module.exports.gmailConfig = gmailConfig;
+// module.exports.gmailConfig = gmailConfig;
+
+module.exports = {
+  credentials,
+  firebaseAdminConfig,
+  CHATKIT_SECRET_KEY,
+  CHATKIT_INSTANCE_LOCATOR,
+  gmailConfig,
+
+}

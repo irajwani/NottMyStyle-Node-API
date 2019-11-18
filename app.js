@@ -1,3 +1,4 @@
+const request = require('request');
 const admin = require("firebase-admin");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -7,6 +8,16 @@ const engines = require('consolidate');
 const paypal = require('paypal-rest-sdk');
 const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-express-handlebars');
+
+const {google} = require('googleapis');
+// const fs = require('fs');
+// const path = require('path');
+// const http = require('http');
+// const url = require('url');
+// const opn = require('open');
+// const destroyer = require('server-destroy');
+
+const {getProfile} = require('./routes/user');
 
 const app = express();
 
@@ -20,7 +31,7 @@ app.set("views", "./views");
 app.set("view engine", "ejs");
 app.use('/public', express.static('public'));
 app.use('/img', express.static(__dirname + '/Images'));
-const {credentials, firebaseAdminConfig, CHATKIT_INSTANCE_LOCATOR, CHATKIT_SECRET_KEY, gmailConfig} = require('./keys');
+const {credentials, firebaseAdminConfig, CHATKIT_INSTANCE_LOCATOR, CHATKIT_SECRET_KEY, gmailConfig, GoogleAuthorizationCode} = require('./keys');
 admin.initializeApp(firebaseAdminConfig);
 
 global.price = 1
@@ -170,10 +181,100 @@ app.get('/paypal', (req, res) => {
   });
 })
 
+let redirectUrl = app_domain;
+
+const oauth2Client = new google.auth.OAuth2(
+  gmailConfig.clientId,
+  gmailConfig.clientSecret,
+  redirectUrl,
+);
+
+google.options({auth: oauth2Client});
+
+//TODO: requires refreshToken
+// oauth2Client.getAccessToken().then(token => console.log(token))
+
+//requires accessToken + refreshToken before it can be used
+// google.oauth2('v1').tokeninfo()
+// .then(info => console.log(info))
+
+//////////////////////// GOOGLE sample/oauth2.js //////////
+// async function authenticate() {
+//   return new Promise((resolve, reject) => {
+//     // grab the url that will be used for authorization
+//     const authorizeUrl = oauth2Client.generateAuthUrl({
+//       access_type: 'offline',
+//       scope: "https://mail.google.com/",
+//     });
+//     const server = http
+//       .createServer(async (req, res) => {
+//         try {
+//           if (req.url.indexOf('/oauth2callback') > -1) {
+//             const qs = new url.URL(req.url, `http://localhost:${process.env.PORT}`)
+//               .searchParams;
+//             res.end('Authentication successful! Please return to the console.');
+//             server.destroy();
+//             const {tokens} = await oauth2Client.getToken(qs.get('code'));
+//             oauth2Client.credentials = tokens; // eslint-disable-line require-atomic-updates
+//             resolve(oauth2Client);
+//           }
+//         } catch (e) {
+//           reject(e);
+//         }
+//       })
+//       .listen(process.env.PORT, () => {
+//         // open the browser to the authorize url to start the workflow
+//         opn(authorizeUrl, {wait: false}).then(cp => cp.unref());
+//       });
+//     destroyer(server);
+//   });
+// }
+// authenticate().then(client => console.log(client))
+/////////////////////////////////////////////////////////////
+
+const scope = "https://mail.google.com/";
+const url = oauth2Client.generateAuthUrl({
+  // 'online' (default) or 'offline' (gets refresh_token)
+  access_type: 'offline',
+
+  // If you only need one scope you can pass it as a string
+  scope: scope,
+  approval_prompt: ''
+});
+console.log(url);
+
+request.get(url, (error, res, body) => {
+  if (error) {
+      console.log(error)
+      return
+  }
+  console.log(`statusCode: ${res.statusCode}`)
+  console.log(body)
+  }
+)
+
+// oauth2Client.getToken(GoogleAuthorizationCode).then((tokens) => {
+//   console.log(JSON.stringify(tokens))
+//   oauth2Client.setCredentials(tokens);
+// })
+
+
+
+
+// https://mail.google.com/
+
+// oauth2Client.getAccessToken().then(token => console.log(token))
+// console.log("URL IS");
+// console.log(token);
+
 // Step 1
 let transporter = nodemailer.createTransport({
   // service: 'gmail',
-  auth: gmailConfig,
+  auth: {
+    ...gmailConfig, 
+    // refreshToken,
+    // accessToken,
+  },
   host: 'smtp.gmail.com',
   port: 465,
   secure: true,
@@ -195,7 +296,8 @@ transporter.use('compile', hbs({
 }));
 
 
-let tempEmail = 'uzi.bro911@gmail.com'
+// let tempEmail = 'uzi.bro911@gmail.com'
+let tempEmail = "imadrajwani@gmail.com"
 //Email Templates
 app.post('/sendWelcomeEmail', (req, res) => {
   
@@ -935,6 +1037,8 @@ app.get('/test', (req,res) => {
 //     })
 //   })
 // })
+
+app.get('/app/getProfile/:uid', getProfile);
 
 let port = process.env.PORT;
 if (port == null || port == "") {
