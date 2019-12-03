@@ -241,15 +241,15 @@ const url = oauth2Client.generateAuthUrl({
   scope: scope,
   approval_prompt: ''
 });
-console.log(url);
+// console.log(url);
 
 request.get(url, (error, res, body) => {
   if (error) {
       console.log(error)
       return
   }
-  console.log(`statusCode: ${res.statusCode}`)
-  console.log(body)
+  // console.log(`statusCode: ${res.statusCode}`)
+  // console.log(body)
   }
 )
 
@@ -1038,7 +1038,7 @@ app.get('/test', (req,res) => {
 //   })
 // })
 
-app.get('/app/getProfile/:uid', getProfile);
+app.get('/app/getProfile', getProfile);
 
 let port = process.env.PORT;
 if (port == null || port == "") {
